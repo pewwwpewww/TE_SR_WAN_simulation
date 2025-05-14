@@ -35,6 +35,7 @@ algo_c_map = {
     'ILP Waypoints': "mediumvioletred",
     'JointHeur': "seagreen",
     'ILP Joint': "darkgreen",
+    'LLLF': "darkgrey"
 }
 
 # maps display name to internal name of topologies
@@ -222,6 +223,7 @@ def prepare_data_and_plot(df, title, plot_type):
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("SegmentIlp", "ILP")
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("DemandFirstWaypoints", "GreedyWaypoints")
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("SequentialCombination", "JointHeur")
+    df["algorithm_complete"] = df["algorithm_complete"].str.replace("LeastLoadedLinkFirst", "LLLF")
 
     # beautify topology names
     df["topology_name"] = df["topology_name"].apply(lambda x: top_n_map[x])

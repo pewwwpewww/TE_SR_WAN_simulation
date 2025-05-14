@@ -89,10 +89,11 @@ def all_topologies_synthetic_demands():
 
     # algorithm settings
     algorithms = [
-        "demand_first_waypoints",
-        "heur_ospf_weights",
-        "inverse_capacity",
-        "sequential_combination",
+        # "demand_first_waypoints",
+        # "heur_ospf_weights",
+        # "inverse_capacity",
+        # "sequential_combination",
+        "least_loaded_link_first",
     ]
     ilp_method = ""
 
@@ -122,10 +123,10 @@ def all_topologies_synthetic_demands():
             "india35",  #: |E|: 160, |V|: 35
             "zib54",  #: |E|: 160, |V|: 54
             "giul39",  #: |E|: 172, |V|: 39
-            "germany50",  #: |E|: 176, |V|: 50
-            "pioro40",  #: |E|: 178, |V|: 40
-            "ta2",  #: |E|: 216, |V|: 65
-            "brain",  #: |E|: 332, |V|: 161
+            # "germany50",  #: |E|: 176, |V|: 50
+            # "pioro40",  #: |E|: 178, |V|: 40
+            # "ta2",  #: |E|: 216, |V|: 65
+            # "brain",  #: |E|: 332, |V|: 161
         ],
 
         # TopologyZoo complete capacity information
@@ -202,6 +203,7 @@ def abilene_all_algorithms():
         ("segment_ilp", "WEIGHTS"),
         ("segment_ilp", "WAYPOINTS"),
         ("segment_ilp", "JOINT"),
+        ("least_loaded_link_first", ""),
     ]
 
     # topology provider setup
@@ -246,6 +248,7 @@ def snd_real_demands():
         "heur_ospf_weights",
         "inverse_capacity",
         "sequential_combination",
+        "least_loaded_link_first",
     ]
     ilp_method = ""
 
