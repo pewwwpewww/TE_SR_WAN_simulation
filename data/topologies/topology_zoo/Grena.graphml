@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
+  <!--Created by yFiles for Java 2.8-->
+  <key for="graphml" id="d0" yfiles.type="resources"/>
+  <key for="port" id="d1" yfiles.type="portgraphics"/>
+  <key for="port" id="d2" yfiles.type="portgeometry"/>
+  <key for="port" id="d3" yfiles.type="portuserdata"/>
+  <key attr.name="Internal" attr.type="boolean" for="node" id="d4"/>
+  <key attr.name="geocode_name" attr.type="string" for="node" id="d5"/>
+  <key attr.name="type" attr.type="string" for="node" id="d6"/>
+  <key attr.name="url" attr.type="string" for="node" id="d7"/>
+  <key attr.name="description" attr.type="string" for="node" id="d8"/>
+  <key for="node" id="d9" yfiles.type="nodegraphics"/>
+  <key attr.name="Access" attr.type="boolean" for="graph" id="d10"/>
+  <key attr.name="Backbone" attr.type="boolean" for="graph" id="d11"/>
+  <key attr.name="Commercial" attr.type="boolean" for="graph" id="d12"/>
+  <key attr.name="Creator" attr.type="string" for="graph" id="d13"/>
+  <key attr.name="Customer" attr.type="boolean" for="graph" id="d14"/>
+  <key attr.name="DateModifier" attr.type="string" for="graph" id="d15"/>
+  <key attr.name="DateMonth" attr.type="int" for="graph" id="d16"/>
+  <key attr.name="DateObtained" attr.type="string" for="graph" id="d17"/>
+  <key attr.name="DateType" attr.type="string" for="graph" id="d18"/>
+  <key attr.name="DateYear" attr.type="string" for="graph" id="d19"/>
+  <key attr.name="Developed" attr.type="boolean" for="graph" id="d20"/>
+  <key attr.name="GeoExtent" attr.type="string" for="graph" id="d21"/>
+  <key attr.name="GeoLocation" attr.type="string" for="graph" id="d22"/>
+  <key attr.name="IX" attr.type="boolean" for="graph" id="d23"/>
+  <key attr.name="LastAccess" attr.type="string" for="graph" id="d24"/>
+  <key attr.name="LastProcessed" attr.type="string" for="graph" id="d25"/>
+  <key attr.name="Layer" attr.type="string" for="graph" id="d26"/>
+  <key attr.name="Network" attr.type="string" for="graph" id="d27"/>
+  <key attr.name="NetworkDate" attr.type="string" for="graph" id="d28"/>
+  <key attr.name="Provenance" attr.type="string" for="graph" id="d29"/>
+  <key attr.name="Source" attr.type="string" for="graph" id="d30"/>
+  <key attr.name="Testbed" attr.type="boolean" for="graph" id="d31"/>
+  <key attr.name="Transit" attr.type="boolean" for="graph" id="d32"/>
+  <key attr.name="Type" attr.type="string" for="graph" id="d33"/>
+  <key attr.name="Version" attr.type="string" for="graph" id="d34"/>
+  <key attr.name="label" attr.type="string" for="edge" id="d35"/>
+  <key attr.name="url" attr.type="string" for="edge" id="d36"/>
+  <key attr.name="description" attr.type="string" for="edge" id="d37"/>
+  <key for="edge" id="d38" yfiles.type="edgegraphics"/>
+  <graph edgedefault="directed" id="G">
+    <data key="d10">false</data>
+    <data key="d11">false</data>
+    <data key="d12">false</data>
+    <data key="d13"><![CDATA[Topology Zoo Toolset]]></data>
+    <data key="d14">false</data>
+    <data key="d15"><![CDATA[=]]></data>
+    <data key="d16">0</data>
+    <data key="d17"><![CDATA[20/07/11]]></data>
+    <data key="d18"><![CDATA[Historic]]></data>
+    <data key="d19"><![CDATA[2008]]></data>
+    <data key="d20">false</data>
+    <data key="d21"><![CDATA[Country]]></data>
+    <data key="d22"><![CDATA[Georgia]]></data>
+    <data key="d23">false</data>
+    <data key="d24"><![CDATA[20/07/11]]></data>
+    <data key="d25"><![CDATA[2011_09_01]]></data>
+    <data key="d26"><![CDATA[IP]]></data>
+    <data key="d27"><![CDATA[GRENA]]></data>
+    <data key="d28"><![CDATA[2008]]></data>
+    <data key="d29"><![CDATA[Secondary]]></data>
+    <data key="d30"><![CDATA[http://www.porta-optica.org/publications/POS-Deliverable1.2v3_NREN_status_and_development_plans.pdf]]></data>
+    <data key="d31">false</data>
+    <data key="d32">false</data>
+    <data key="d33"><![CDATA[REN]]></data>
+    <data key="d34"><![CDATA[1.0]]></data>
+    <node id="n0">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Tbilisi]]></data>
+      <data key="d6"><![CDATA[MAN]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="928.0" y="316.0"/>
+          <y:Fill color="#00FF00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="91.4765625" x="-30.73828125" y="8.2890625">Tbilisi GRENA Network</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n1">
+      <data key="d4">true</data>
+      <data key="d5"/>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="967.0" y="434.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="72.65625" x="-21.328125" y="8.2890625">Corecess DX6524</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n2">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Rustavi]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="954.0" y="396.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="56.36328125" x="-13.181640625" y="8.2890625">Rustavi CO14</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n3">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Telavi]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="788.0" y="140.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="72.93359375" x="-21.466796875" y="8.2890625">Cisco 3640 Telavi</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n4">
+      <data key="d4">true</data>
+      <data key="d5"/>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="795.0" y="438.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="72.65625" x="-21.328125" y="8.2890625">Corecess DX6524</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n5">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Rustavi]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="800.0" y="389.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="56.36328125" x="-13.181640625" y="8.2890625">Rustavi CO15</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n6">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Gori]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="727.0" y="268.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="66.515625" x="-18.2578125" y="8.2890625">Cisco 3640 Gori</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n7">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Kutaisi]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="477.0" y="295.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="94.71875" x="-32.359375" y="8.2890625">Cisco 3640 Kutaisi C07</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n8">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Khashuri]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="615.0" y="212.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="84.43359375" x="-27.216796875" y="8.2890625">Cisco 3640 Khashuri</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n9">
+      <data key="d4">true</data>
+      <data key="d5"/>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="563.0" y="105.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="72.65625" x="-21.328125" y="8.2890625">Corecess DX6524</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n10">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Kutaisi]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="424.0" y="96.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="76.53515625" x="-23.267578125" y="8.2890625">Cisco 2511 Kutaisi</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n11">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Kutaisi]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="478.0" y="164.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="94.71875" x="-32.359375" y="8.2890625">Cisco 3640 Kutaisi C04</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n12">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Samtredia]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="338.0" y="247.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="88.91796875" x="-29.458984375" y="8.2890625">Cisco 3640 Samtredia</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n13">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Batumi]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="127.0" y="397.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="76.9921875" x="-23.49609375" y="8.2890625">Cisco 2621 Batumi</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n14">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Poti]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="192.0" y="234.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="64.875" x="-17.4375" y="8.2890625">Cisco 3640 Poti</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="n15">
+      <data key="d4">true</data>
+      <data key="d5"><![CDATA[Zugididi]]></data>
+      <data key="d6"><![CDATA[Router]]></data>
+      <data key="d8"/>
+      <data key="d9">
+        <y:ShapeNode>
+          <y:Geometry height="30.0" width="30.0" x="113.0" y="136.0"/>
+          <y:Fill color="#FFCC00" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="8" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="13.421875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="82.03125" x="-26.015625" y="8.2890625">Cisco 3640 Zugididi</y:NodeLabel>
+          <y:Shape type="ellipse"/>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <edge id="e0" source="n0" target="n6">
+      <data key="d35"><![CDATA[IPIP Tunnel]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#00FF00" type="line" width="3.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e1" source="n0" target="n3">
+      <data key="d35"><![CDATA[IPIP Tunnel]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#00FF00" type="line" width="3.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e2" source="n0" target="n5">
+      <data key="d35"><![CDATA[E1]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="807.5" y="321.0"/>
+          </y:Path>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e3" source="n1" target="n2">
+      <data key="d35"><![CDATA[Green Link (No label)]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#008080" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e4" source="n2" target="n5">
+      <data key="d35"><![CDATA[E1]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e5" source="n4" target="n5">
+      <data key="d35"><![CDATA[Green Link (No label)]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#008080" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e6" source="n6" target="n8">
+      <data key="d35"><![CDATA[E1]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e7" source="n7" target="n8">
+      <data key="d35"><![CDATA[E1]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e8" source="n7" target="n11">
+      <data key="d35"><![CDATA[E1]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e9" source="n7" target="n12">
+      <data key="d35"><![CDATA[E1]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e10" source="n9" target="n11">
+      <data key="d35"><![CDATA[Green Link (No label)]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#008080" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e11" source="n10" target="n11">
+      <data key="d35"><![CDATA[Green Link (No label)]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#008080" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e12" source="n12" target="n14">
+      <data key="d35"><![CDATA[E1]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e13" source="n13" target="n14">
+      <data key="d35"><![CDATA[IPIP Tunnel]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#00FF00" type="line" width="3.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e14" source="n14" target="n15">
+      <data key="d35"><![CDATA[E1]]></data>
+      <data key="d37"/>
+      <data key="d38">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#FF0000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+  </graph>
+  <data key="d0">
+    <y:Resources/>
+  </data>
+</graphml>

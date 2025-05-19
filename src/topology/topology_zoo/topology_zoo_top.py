@@ -23,7 +23,9 @@ class TopologyZoo(GenericTopologyProvider):
         if not os.path.exists(topology_file_name):
             msg = f"topology file not found: {topology_file_name}"
             raise Exception(msg)
-        nx_graph = nx.read_graphml(topology_file_name, node_type=int)
+        nx_graph = nx.read_graphml(topology_file_name, node_type=str)
+        mapping = dict(zip(nx_graph, range(nx_graph.number_of_nodes())))
+        nx_graph = nx.relabel_nodes(nx_graph, mapping)
 
         n = len(nx_graph)
 

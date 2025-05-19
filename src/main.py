@@ -89,10 +89,10 @@ def all_topologies_synthetic_demands():
 
     # algorithm settings
     algorithms = [
-        # "demand_first_waypoints",
-        # "heur_ospf_weights",
-        # "inverse_capacity",
-        # "sequential_combination",
+        "demand_first_waypoints",
+        "heur_ospf_weights",
+        "inverse_capacity",
+        "sequential_combination",
         "least_loaded_link_first",
     ]
     ilp_method = ""
@@ -123,35 +123,35 @@ def all_topologies_synthetic_demands():
             "india35",  #: |E|: 160, |V|: 35
             "zib54",  #: |E|: 160, |V|: 54
             "giul39",  #: |E|: 172, |V|: 39
-            # "germany50",  #: |E|: 176, |V|: 50
-            # "pioro40",  #: |E|: 178, |V|: 40
-            # "ta2",  #: |E|: 216, |V|: 65
+            "germany50",  #: |E|: 176, |V|: 50
+            "pioro40",  #: |E|: 178, |V|: 40
+            "ta2",  #: |E|: 216, |V|: 65
             # "brain",  #: |E|: 332, |V|: 161
         ],
 
         # TopologyZoo complete capacity information
         "topology_zoo": [
-            "basnet",  #: |E|: 12 , |V|: 7
-            "cesnet1999",  #: |E|: 24 , |V|: 13
-            "kreonet",  #: |E|: 24 , |V|: 13
-            "eenet",  #: |E|: 26 , |V|: 13
-            "savvis",  #: |E|: 40 , |V|: 19
-            "atmnet",  #: |E|: 44 , |V|: 21
-            "uran",  #: |E|: 48 , |V|: 24
-            "amres",  #: |E|: 48 , |V|: 25
-            "karen",  #: |E|: 56 , |V|: 25
-            "rediris",  #: |E|: 62 , |V|: 19
-            "janetlense",  #: |E|: 68 , |V|: 20
-            "rnp",  #: |E|: 68 , |V|: 31
-            "kentmanjan2011",  #: |E|: 76 , |V|: 38
-            "myren",  #: |E|: 78 , |V|: 37
-            "belnet2006",  #: |E|: 82 , |V|: 23
-            "niif",  #: |E|: 82 , |V|: 36
-            "carnet",  #: |E|: 86 , |V|: 44
-            "sanet",  #: |E|: 90 , |V|: 43
-            "geant2009",  #: |E|: 104, |V|: 34
-            "renater2010",  #: |E|: 112, |V|: 43
-            "switchl3",  #: |E|: 126, |V|: 42
+            "Basnet",  #: |E|: 12 , |V|: 7
+            "Cesnet1999",  #: |E|: 24 , |V|: 13
+            "Kreonet",  #: |E|: 24 , |V|: 13
+            "Eenet",  #: |E|: 26 , |V|: 13
+            "Savvis",  #: |E|: 40 , |V|: 19
+            "Atmnet",  #: |E|: 44 , |V|: 21
+            "Uran",  #: |E|: 48 , |V|: 24
+            "Amres",  #: |E|: 48 , |V|: 25
+            "Karen",  #: |E|: 56 , |V|: 25
+            "Rediris",  #: |E|: 62 , |V|: 19
+            "Janetlense",  #: |E|: 68 , |V|: 20
+            "Rnp",  #: |E|: 68 , |V|: 31
+            "Kentmanjan2011",  #: |E|: 76 , |V|: 38
+            "Myren",  #: |E|: 78 , |V|: 37
+            "Belnet2006",  #: |E|: 82 , |V|: 23
+            "Niif",  #: |E|: 82 , |V|: 36
+            "Carnet",  #: |E|: 86 , |V|: 44
+            "Sanet",  #: |E|: 90 , |V|: 43
+            "Geant2009",  #: |E|: 104, |V|: 34
+            "Renater2010",  #: |E|: 112, |V|: 43
+            "Switchl3",  #: |E|: 126, |V|: 42
         ]
     }
 
@@ -195,14 +195,14 @@ def abilene_all_algorithms():
 
     # algorithm settings
     algorithms = [  # ("algorithm_name", "ilp_method")
-        ("demand_first_waypoints", ""),
-        ("heur_ospf_weights", ""),
-        ("inverse_capacity", ""),
-        ("sequential_combination", ""),
-        ("uniform_weights", ""),
-        ("segment_ilp", "WEIGHTS"),
-        ("segment_ilp", "WAYPOINTS"),
-        ("segment_ilp", "JOINT"),
+        # ("demand_first_waypoints", ""),
+        # # ("heur_ospf_weights", ""),
+        # ("inverse_capacity", ""),
+        # ("sequential_combination", ""),
+        # ("uniform_weights", ""),
+        # ("segment_ilp", "WEIGHTS"),
+        # ("segment_ilp", "WAYPOINTS"),
+        # ("segment_ilp", "JOINT"),
         ("least_loaded_link_first", ""),
     ]
 
@@ -244,10 +244,10 @@ def snd_real_demands():
 
     # algorithm settings
     algorithms = [
-        "demand_first_waypoints",
-        "heur_ospf_weights",
-        "inverse_capacity",
-        "sequential_combination",
+        # "demand_first_waypoints",
+        # "heur_ospf_weights",
+        # "inverse_capacity",
+        # "sequential_combination",
         "least_loaded_link_first",
     ]
     ilp_method = ""

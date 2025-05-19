@@ -13,7 +13,7 @@ from algorithm.segment_routing.sr_utility import SRUtility
 
 
 class LeastLoadedLinkFirst(GenericSR):
-    def __init__(self, nodes: list, links: list, demands: list, weights: dict = None, waypoints: dict = None, **kwargs):
+    def __init__(self, nodes: list, links: list, demands: list, weights: dict = None, waypoints: dict = None, **kwargs): # type: ignore
         super().__init__(nodes, links, demands, weights, waypoints)
 
         # topology info
@@ -33,7 +33,7 @@ class LeastLoadedLinkFirst(GenericSR):
         self.__weights = weights if weights else {(u, v): 1. for u, v in self.__links}
 
         # networkX graph algorithm
-        self.__g = None
+        # self.__g = None
 
         self.__init_graph()
         self.__init_capacity_map()
@@ -45,7 +45,7 @@ class LeastLoadedLinkFirst(GenericSR):
         return {(u, v): c for u, v, c in links}
 
     def __init_capacity_map(self):
-        self.__capacity_map = np.ones((self.__n, self.__n), np.float)
+        self.__capacity_map = np.ones((self.__n, self.__n), dtype='f')
         for u, v in self.__links:
             self.__capacity_map[u][v] = self.__capacities[u, v]
 

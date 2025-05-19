@@ -12,7 +12,8 @@ from utility import utility
 from utility.json_result_handler import JsonResultReader
 from utility.utility import HIGHLIGHT, CEND
 
-DEFAULT_DIR_DATA = utility.create_dirs(f"../results_paper")
+# DEFAULT_DIR_DATA = utility.create_dirs(f"../results_paper")
+DEFAULT_DIR_DATA = utility.create_dirs(f"../out")
 DIR_PLOT = utility.create_dirs(f"../out/plots")
 
 # plot settings
@@ -94,14 +95,16 @@ top_n_map = {
 }
 
 
-def add_vertical_algorithm_labels(ax):
+def add_vertical_algorithm_labels(ax, names):
     """ Computes the position of the vertical algorithm labels and adds them to the plot """
+
     ymin, ymax = ax.get_ylim()
     lines = ax.get_lines()
     boxes = [c for c in ax.get_children() if type(c).__name__ == 'PathPatch']
     lines_per_box = int(len(lines) / len(boxes))
 
-    val_list = list(algo_c_map.keys())
+    # val_list = list(algo_c_map.keys())
+    val_list = names
     off_set = (ymax - ymin) * 0.025
     for i, median in enumerate(lines[3:len(lines):lines_per_box]):
         x, y = (data.mean() for data in median.get_data())
@@ -122,6 +125,10 @@ def create_box_plot(df_plot, x, y, hue, file_name, x_label="", y_label="", fig_s
     fig, ax = plt.subplots(figsize=fig_size)
 
     flier_props = dict(markersize=1, linestyle='none')
+
+    algo_names = df_plot['algorithm_complete'].unique()
+    print(f"algo names: {algo_names}")
+
     box_plot = sns.boxplot(x=x, y=y, hue=hue, data=df_plot, ax=ax, linewidth=0.5, flierprops=flier_props,
                            palette=algo_c_map)
 
@@ -132,14 +139,14 @@ def create_box_plot(df_plot, x, y, hue, file_name, x_label="", y_label="", fig_s
     plt.tight_layout()
     ax.set_facecolor('white')
     ax.grid(linestyle=':', color='grey', linewidth=0.5)
-    ax.get_legend().remove()
+    ax.get_legend().remove() # type: ignore
     x_grid_lines = ax.get_xgridlines()
     if y_lim_top:
         plt.ylim(0.8, y_lim_top)
     for y_line in x_grid_lines:
         y_line.set_color('white')
 
-    add_vertical_algorithm_labels(box_plot.axes)
+    add_vertical_algorithm_labels(box_plot.axes, algo_names)
     plt.xticks(rotation=0)
     plt.savefig(file_name.replace(" ", ""), bbox_inches="tight", format='pdf')
     plt.close()
