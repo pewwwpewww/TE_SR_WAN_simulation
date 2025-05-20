@@ -20,7 +20,6 @@ class LeastLoadedLinkFirst(GenericSR):
         self.__capacities = self.__extract_capacity_dict(links)  # dict with {(u,v):c, ..}
         self.__links = list(self.__capacities.keys())  # list with [(u,v), ..]
         self.__n = len(nodes)
-        self.__capacity_map = None
         if waypoints is not None:
             segmented_demands = SRUtility.get_segmented_demands(waypoints, demands)
             self.__demands = {idx: (s, t, d) for idx, (s, t, d) in enumerate(segmented_demands)}  # dict {idx:(s,t,d)}
@@ -31,6 +30,8 @@ class LeastLoadedLinkFirst(GenericSR):
 
         # initial weights
         self.__weights = weights if weights else {(u, v): 1. for u, v in self.__links}
+        self.__flow_sum = {(u, v): 0 for u, v in self.__links}
+        self.__utilization = {(u, v): 0 for u, v in self.__links}
 
         # networkX graph algorithm
         # self.__g = None
@@ -58,9 +59,9 @@ class LeastLoadedLinkFirst(GenericSR):
             self.__g.add_edge(u, v)
             self.__g.edges[u,v]["weight"] = self.__weights[u, v]
 
-    def __potential_utilisation_dijkstra(self, loads, s, t, demand):
+    def __potential_utilisation_dijkstra(self, s, t, demand):
         # This contains the utilisation from the start node to all other nodes
-        utilisation = {u: float("inf") for u in list(self.__g)}
+        node_utilisation = {u: float("inf") for u in list(self.__g)}
 
         # This contains the predecessor of the node
         predecessor = {u: -1 for u in list(self.__g)}
@@ -69,7 +70,7 @@ class LeastLoadedLinkFirst(GenericSR):
         visited = {u: False for u in list(self.__g)}
 
         # The utilisation from the start node to itself is of course 0
-        utilisation[s] = 0
+        node_utilisation[s] = 0
 
         # While there are nodes left to visit...
         while visited[t] != True:
@@ -79,8 +80,8 @@ class LeastLoadedLinkFirst(GenericSR):
             shortest_node = -1
             for u in list(self.__g):
                 # ... by going through all nodes that haven't been visited yet
-                if utilisation[u] < minimum_utilisation and not visited[u]:
-                    minimum_utilisation = utilisation[u]
+                if node_utilisation[u] < minimum_utilisation and not visited[u]:
+                    minimum_utilisation = node_utilisation[u]
                     shortest_node = u
 
             if shortest_node == -1:
@@ -91,10 +92,10 @@ class LeastLoadedLinkFirst(GenericSR):
             neighbours = list(self.__g.neighbors(shortest_node))
             for n in neighbours:
                 # ...if the path over this edge is shorter...
-                if utilisation[n] > max(utilisation[shortest_node], (loads[shortest_node, n] + demand)/self.__capacities[shortest_node, n]):
+                if node_utilisation[n] > max(node_utilisation[shortest_node], (self.__flow_sum[shortest_node, n] + demand)/self.__capacities[shortest_node, n]):
                     # ...Save this path as new shortest path.
                     predecessor[n] = shortest_node
-                    utilisation[n] = max(utilisation[shortest_node], (loads[shortest_node, n] + demand)/self.__capacities[shortest_node, n])
+                    node_utilisation[n] = max(node_utilisation[shortest_node], (self.__flow_sum[shortest_node, n] + demand)/self.__capacities[shortest_node, n])
 
             # Lastly, note that we are finished with this node.
             visited[shortest_node] = True
@@ -113,45 +114,39 @@ class LeastLoadedLinkFirst(GenericSR):
     def __least_loaded_link_first(self):
         """ main procedure """
         
-        loads = {(u, v): 0 for u, v in self.__links}
-        utilization = {(u, v): 0 for u, v in self.__links}
         sorted_demands = sorted(self.__demands.items(), key=lambda item: -item[1][2])
 
         routes = list()
 
         for idx, [s, t, demand] in sorted_demands:
-            best_path = self.__potential_utilisation_dijkstra(loads, s, t, demand)
+            best_path = self.__potential_utilisation_dijkstra(s, t, demand)
             if(best_path is None):
                 print(f"Could not find a Path for this demand: s={s}, t={t}, demand={demand}")
                 continue
             
             for i in range(len(best_path)-1):
-                loads[best_path[i], best_path[i+1]] = loads[best_path[i], best_path[i+1]] + demand
-                utilization[best_path[i], best_path[i+1]] = loads[best_path[i], best_path[i+1]] / self.__capacities[best_path[i], best_path[i+1]]
-            
+                self.__flow_sum[best_path[i], best_path[i+1]] = self.__flow_sum[best_path[i], best_path[i+1]] + demand
+                
             routes.append(best_path)
-
-        
-        best_objective = max(utilization.values())
-
-        return loads, best_objective
 
     def solve(self) -> dict:
         """ compute solution """
 
         self.__start_time = t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded and count per core)
-        loads, objective = self.__least_loaded_link_first()
+        self.__least_loaded_link_first()
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
+        utilization = {(i, j): self.__flow_sum[i, j] / self.__capacities[i, j] for i, j in self.__links}
+
         solution = {
-            "objective": objective,
+            "objective": max(utilization.values()),
             "execution_time": t_duration,
             "process_time": pt_duration,
             "waypoints": self.__segments,
             "weights": self.__weights,
-            "loads": loads,
+            "loads": utilization,
         }
 
         return solution
