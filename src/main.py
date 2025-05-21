@@ -89,10 +89,10 @@ def all_topologies_synthetic_demands():
 
     # algorithm settings
     algorithms = [
-        "demand_first_waypoints",
-        "heur_ospf_weights",
-        "inverse_capacity",
-        "sequential_combination",
+        # "demand_first_waypoints",
+        # "heur_ospf_weights",
+        # "inverse_capacity",
+        # "sequential_combination",
         "least_loaded_link_first",
     ]
     ilp_method = ""
@@ -195,14 +195,14 @@ def abilene_all_algorithms():
 
     # algorithm settings
     algorithms = [  # ("algorithm_name", "ilp_method")
-        ("demand_first_waypoints", ""),
-        ("heur_ospf_weights", ""),
-        ("inverse_capacity", ""),
-        ("sequential_combination", ""),
-        ("uniform_weights", ""),
-        ("segment_ilp", "WEIGHTS"),
-        ("segment_ilp", "WAYPOINTS"),
-        ("segment_ilp", "JOINT"),
+        # ("demand_first_waypoints", ""),
+        # ("heur_ospf_weights", ""),
+        # ("inverse_capacity", ""),
+        # ("sequential_combination", ""),
+        # ("uniform_weights", ""),
+        # ("segment_ilp", "WEIGHTS"),
+        # ("segment_ilp", "WAYPOINTS"),
+        # ("segment_ilp", "JOINT"),
         ("least_loaded_link_first", ""),
     ]
 
@@ -244,10 +244,10 @@ def snd_real_demands():
 
     # algorithm settings
     algorithms = [
-        "demand_first_waypoints",
-        "heur_ospf_weights",
-        "inverse_capacity",
-        "sequential_combination",
+        # "demand_first_waypoints",
+        # "heur_ospf_weights",
+        # "inverse_capacity",
+        # "sequential_combination",
         "least_loaded_link_first",
     ]
     ilp_method = ""
