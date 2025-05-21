@@ -118,14 +118,18 @@ class LeastLoadedLinkFirst(GenericSR):
 
         routes = list()
 
+        # print(f"graph: {self.__g}")
         for idx, [s, t, demand] in sorted_demands:
+            # print(f"s: {s}, t: {t}, demand: {demand}")
+
             best_path = self.__potential_utilisation_dijkstra(s, t, demand)
             if(best_path is None):
                 print(f"Could not find a Path for this demand: s={s}, t={t}, demand={demand}")
                 continue
             
+            # print(f"best_path: {best_path}")
             for i in range(len(best_path)-1):
-                self.__flow_sum[best_path[i], best_path[i+1]] = self.__flow_sum[best_path[i], best_path[i+1]] + demand
+                self.__flow_sum[best_path[i], best_path[i+1]] += demand
                 
             routes.append(best_path)
 
