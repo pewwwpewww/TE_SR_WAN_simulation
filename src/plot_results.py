@@ -95,12 +95,14 @@ top_n_map = {
 }
 
 
-def add_vertical_algorithm_labels(ax, names):
+def add_vertical_algorithm_labels_linear(ax, names):
     """ Computes the position of the vertical algorithm labels and adds them to the plot """
 
     ymin, ymax = ax.get_ylim()
     lines = ax.get_lines()
     boxes = [c for c in ax.get_children() if type(c).__name__ == 'PathPatch']
+    if len(boxes)==0:
+        return
     lines_per_box = int(len(lines) / len(boxes))
 
     # val_list = list(algo_c_map.keys())
@@ -112,9 +114,34 @@ def add_vertical_algorithm_labels(ax, names):
         value = val_list[i % len(val_list)]
         label = value
         # if y position of label is above a certain level, label will be abbreviated
-        if y > ymax - (ymax - ymin) * 0.25:
+        if y + off_set*10 > ymax:
             label = f"{value[0:3]}."
         ax.text(x, y + off_set, label, ha='center', va='bottom', fontsize=SMALL_SIZE, rotation=90,
+                color=algo_c_map[value],
+                fontweight='bold')
+        
+def add_vertical_algorithm_labels_logarithmic(ax, names):
+    """ Computes the position of the vertical algorithm labels and adds them to the plot """
+
+    ymin, ymax = ax.get_ylim()
+    lines = ax.get_lines()
+    boxes = [c for c in ax.get_children() if type(c).__name__ == 'PathPatch']
+    if len(boxes)==0:
+        return
+    lines_per_box = int(len(lines) / len(boxes))
+
+    # val_list = list(algo_c_map.keys())
+    val_list = names
+    off_set = np.log10(ymax / ymin) * 0.025
+    for i, median in enumerate(lines[3:len(lines):lines_per_box]):
+        x, y = (data.mean() for data in median.get_data())
+
+        value = val_list[i % len(val_list)]
+        label = value
+        # if y position of label is above a certain level, label will be abbreviated
+        if y * 10**off_set * 10 > ymax:
+            label = f"{value[0:3]}."
+        ax.text(x, y * 10**off_set, label, ha='center', va='bottom', fontsize=SMALL_SIZE, rotation=90,
                 color=algo_c_map[value],
                 fontweight='bold')
 
@@ -123,6 +150,9 @@ def create_box_plot(df_plot, x, y, hue, file_name, x_label="", y_label="", fig_s
                     title=None, y_lim_top=None):
     """ Setup and perform matplotlib boxplot"""
     fig, ax = plt.subplots(figsize=fig_size)
+
+    if y=="execution_time":
+        ax.set_yscale("log")
 
     flier_props = dict(markersize=1, linestyle='none')
 
@@ -141,12 +171,15 @@ def create_box_plot(df_plot, x, y, hue, file_name, x_label="", y_label="", fig_s
     ax.grid(linestyle=':', color='grey', linewidth=0.5)
     ax.get_legend().remove() # type: ignore
     x_grid_lines = ax.get_xgridlines()
-    if y_lim_top:
-        plt.ylim(0.8, y_lim_top)
+    # if y_lim_top:
+        # plt.ylim(0.8, y_lim_top)
     for y_line in x_grid_lines:
         y_line.set_color('white')
 
-    add_vertical_algorithm_labels(box_plot.axes, algo_names)
+    if(y=="execution_time"):
+        add_vertical_algorithm_labels_logarithmic(box_plot.axes, algo_names)
+    else:
+        add_vertical_algorithm_labels_linear(box_plot.axes, algo_names)
     plt.xticks(rotation=0)
     plt.savefig(file_name.replace(" ", ""), bbox_inches="tight", format='pdf')
     plt.close()
@@ -198,7 +231,7 @@ def filter_biggest_12_topologies(df):
     return df
 
 
-def prepare_data_and_plot(df, title, plot_type):
+def prepare_data_and_plot(df, title, plot_type, plotting_value):
     """ Prepares data (filter topologies, beautify naming, sorting) and starts plotting """
     # create plot sub directory
     out_path = utility.create_dirs(os.path.join(DIR_PLOT, plot_type))
@@ -251,8 +284,8 @@ def prepare_data_and_plot(df, title, plot_type):
     print("Mean objective over all topologies:")
     for algo in df['algorithm_complete'].unique():
         df_x = df[df["algorithm_complete"] == algo]
-        mean = np.mean(df_x["objective"].values.mean())
-        print(f'{algo:>20}: {mean}')
+        mean = np.mean(df_x[plotting_value].values.mean())
+        print(f'{algo:>20} {plotting_value}: {mean}')
     print()
 
     # plot files
@@ -267,27 +300,27 @@ def prepare_data_and_plot(df, title, plot_type):
             width = 6 + 1.5 * df_i['topology_name'].nunique()
 
             y_lim_top = 8.5
-            plot_file = os.path.join(out_path, f"{plot_type}_{i}.pdf")
-            create_box_plot(df_i, "topology_name", "objective", "algorithm_complete", plot_file, x_label="",
-                            y_label="Max. Normalized Link Utilization", fig_size=(width, 8),
+            plot_file = os.path.join(out_path, f"{plot_type}_{plotting_value}_{i}.pdf")
+            create_box_plot(df_i, "topology_name", plotting_value, "algorithm_complete", plot_file, x_label="",
+                            y_label="Execution Time" if plotting_value=="execution_time" else "Max. Normalized Link Utilization", fig_size=(width, 8),
                             title=title if i == 0 else "", y_lim_top=y_lim_top)
 
         df = filter_biggest_12_topologies(df)
         width = 6 + 1.5 * df['topology_name'].nunique()
 
         y_lim_top = 5.1
-        plot_file = os.path.join(out_path, f"12_biggest_of_{plot_type}.pdf")
-        create_box_plot(df, "topology_name", "objective", "algorithm_complete", plot_file, x_label="",
-                        y_label="Max. Normalized Link Utilization", fig_size=(width, 8), title=title,
+        plot_file = os.path.join(out_path, f"12_biggest_of_{plot_type}_{plotting_value}.pdf")
+        create_box_plot(df, "topology_name", plotting_value, "algorithm_complete", plot_file, x_label="",
+                        y_label="Execution Time" if plotting_value=="execution_time" else "Max. Normalized Link Utilization", fig_size=(width, 8), title=title,
                         y_lim_top=y_lim_top)
     else:
         # PLOT FIGURE 4 + 5
         y_lim_top = None
-        plot_file = os.path.join(out_path, f"{plot_type}.pdf")
+        plot_file = os.path.join(out_path, f"{plot_type}_{plotting_value}.pdf")
         if plot_type == "all_algorithms":
-            plot_file = os.path.join(out_path, f"all_algorithms_abilene.pdf")
-        create_box_plot(df, "topology_name", "objective", "algorithm_complete", plot_file, x_label="",
-                        y_label="Max. Normalized Link Utilization", fig_size=(8, 6), title=title,
+            plot_file = os.path.join(out_path, f"all_algorithms_abilene_{plotting_value}.pdf")
+        create_box_plot(df, "topology_name", plotting_value, "algorithm_complete", plot_file, x_label="",
+                        y_label="Execution Time" if plotting_value=="execution_time" else "Max. Normalized Link Utilization", fig_size=(8, 6), title=title,
                         y_lim_top=y_lim_top)
     return
 
@@ -334,5 +367,6 @@ if __name__ == "__main__":
     # start plot process for each dataframe
     for df_i, title_i, plot_type_i in raw_dfs_title:
         print(f"{HIGHLIGHT}{title_i} - {plot_type_i}{CEND}")
-        prepare_data_and_plot(df_i, title_i, plot_type_i)
+        prepare_data_and_plot(df_i, title_i, plot_type_i, "objective")
+        prepare_data_and_plot(df_i, title_i, plot_type_i, "execution_time")
         print()
