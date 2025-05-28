@@ -2,7 +2,7 @@
 
 ## Overview 
 This Project is an extension of https://github.com/tfenz/TE_SR_WAN_simulation.git.
-This Code extends the original project by 3 new algorithms LeastLoadedLinkFirst(LLLF), ... and ... . We also analyse two other objectives for these algorithms.
+This Code extends the original project by 3 new algorithms LeastLoadedLinkFirst(LLLF), ... and ... . We also analyse two other objectives for these algorithms, namely AveragePathLength(ALU) and AveragePathLength(APL).
 For further information on all the dependencies and how to set up the project go to the original. There is all the information you should need.
 
 ## Install Python & Dependencies
