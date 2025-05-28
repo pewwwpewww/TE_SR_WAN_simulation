@@ -70,28 +70,28 @@ top_n_map = {
     "brain": "Brain",
 
     # topology zoo
-    "Basnet": "BasNet",
-    "Cesnet1999": "CesNet1999",
-    "Kreonet": "KreoNet",
-    "Eenet": "EeNet",
-    "Uran": "Uran",
-    "Amres": "Amres",
-    "Janetlense": "JanetLense",
-    "Renater2010": "Renater2010",
-    "Renater2001": "Renater2001",
-    "Karen": "Karen",
-    "Rediris": "RedIris",
-    "Rnp": "Rnp",
-    "Kentmanjan2011": "KentmanJan2011",
-    "Myren": "Myren",
-    "Belnet2006": "BelNet2006",
-    "Carnet": "CarNet",
-    "Niif": "Niif",
-    "Sanet": "SaNet",
-    "Geant2009": "Géant2009",
-    "Switchl3": "SwitchL3",
-    "Savvis": "Savvis",
-    "Atmnet": "Atmnet"
+    "basnet": "BasNet",
+    "cesnet1999": "CesNet1999",
+    "kreonet": "KreoNet",
+    "eenet": "EeNet",
+    "uran": "Uran",
+    "amres": "Amres",
+    "janetlense": "JanetLense",
+    "renater2010": "Renater2010",
+    "renater2001": "Renater2001",
+    "karen": "Karen",
+    "rediris": "RedIris",
+    "rnp": "Rnp",
+    "kentmanjan2011": "KentmanJan2011",
+    "myren": "Myren",
+    "belnet2006": "BelNet2006",
+    "carnet": "CarNet",
+    "niif": "Niif",
+    "sanet": "SaNet",
+    "geant2009": "Géant2009",
+    "switchl3": "SwitchL3",
+    "savvis": "Savvis",
+    "atmnet": "Atmnet"
 }
 
 
@@ -207,16 +207,16 @@ def get_incomplete_sample_nrs(df):
 
 def filter_trees(df):
     """ All results from tree topologies are removed """
-    df = df[df["topology_name"] != "amres"]
-    df = df[df["topology_name"] != "atmnet"]
-    df = df[df["topology_name"] != "basnet"]
-    df = df[df["topology_name"] != "brain"]
-    df = df[df["topology_name"] != "carnet"]
-    df = df[df["topology_name"] != "cesnet1999"]
-    df = df[df["topology_name"] != "eenet"]
-    df = df[df["topology_name"] != "kentmanjan2011"]
-    df = df[df["topology_name"] != "sanet"]
-    df = df[df["topology_name"] != "savvis"]
+    df = df[df["topology_name"].str.lower() != "amres"]
+    df = df[df["topology_name"].str.lower() != "atmnet"]
+    df = df[df["topology_name"].str.lower() != "basnet"]
+    df = df[df["topology_name"].str.lower() != "brain"]
+    df = df[df["topology_name"].str.lower() != "carnet"]
+    df = df[df["topology_name"].str.lower() != "cesnet1999"]
+    df = df[df["topology_name"].str.lower() != "eenet"]
+    df = df[df["topology_name"].str.lower() != "kentmanjan2011"]
+    df = df[df["topology_name"].str.lower() != "sanet"]
+    df = df[df["topology_name"].str.lower() != "savvis"]
     return df
 
 
@@ -244,7 +244,7 @@ def prepare_data_and_plot(df, title, plot_type, plotting_value):
 
     # for the 'all algorithm plot' (including ilps) show only abilene
     if plot_type.startswith("all_algorithms"):
-        df = df[(df["topology_name"] == "abilene")]
+        df = df[(df["topology_name"].str.lower() == "abilene")]
 
     if not plot_type.startswith("all_algorithms"):
         df = df[df["algorithm"] != "uniform_weights"]
@@ -266,7 +266,7 @@ def prepare_data_and_plot(df, title, plot_type, plotting_value):
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("LeastLoadedLinkFirst", "LLLF")
 
     # beautify topology names
-    df["topology_name"] = df["topology_name"].apply(lambda x: top_n_map[x])
+    df["topology_name"] = df["topology_name"].str.lower().apply(lambda x: top_n_map[x])
 
     # sort df by topology + algorithm name
     df['algorithm_complete'] = pd.Categorical(df['algorithm_complete'], list(algo_c_map.keys()))
