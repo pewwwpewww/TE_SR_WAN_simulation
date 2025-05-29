@@ -14,6 +14,8 @@ def get_algorithm(algorithm_name: str, nodes: list, links: list, demands: list, 
     algorithm_name = algorithm_name.lower()
     if algorithm_name == "demand_first_waypoints":
         algorithm = DemandsFirstWaypoints(nodes, links, demands, weights, waypoints)
+    elif algorithm_name == "apl_waypoints":
+        algorithm = AplWaypoints(nodes, links, demands, weights, waypoints)
     elif algorithm_name == "heur_ospf_weights":
         algorithm = HeurOSPFWeights(nodes, links, demands, weights, waypoints, seed=seed, time_out=time_out)
     elif algorithm_name == "inverse_capacity":
