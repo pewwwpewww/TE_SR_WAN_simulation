@@ -14,14 +14,14 @@ class InverseCapacity(GenericSR):
         self.__weights = None
         self.__waypoints = waypoints
 
-    def calculate_apl(paths, demands):
+    def calculate_apl(self,paths):
         """
         ## Computes the weighted average path length (APL) based on hop-by-hop paths.
         """
         total_weight = 0
         total_length = 0
-        for idx, (s, t, d) in demands.items():
-            path = paths.get(idx, [])
+        for idx, (s, t, d) in enumerate(self.__demands):
+            path = paths[idx]
             if len(path) < 2:
                 continue
             total_weight += d
@@ -42,10 +42,9 @@ class InverseCapacity(GenericSR):
         post_processing = EqualSplitShortestPath(nodes=self.__nodes, links=self.__links, demands=self.__demands,
                                                  split=True, weights=self.__weights, waypoints=self.__waypoints)
         solution = post_processing.solve()
-
         pt_duration = time.process_time() - pt_start
         exe_time = time.process_time() - t
-        solution["objective_apl"] = self.calculate_apl(solution.get("paths", {}), self.__demands)
+        solution["objective_apl"] = self.calculate_apl(solution["paths"])
         # update execution time
         solution["execution_time"] = exe_time
         solution["process_time"] = pt_duration

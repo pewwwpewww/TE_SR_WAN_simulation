@@ -14,6 +14,19 @@ class UniformWeights(GenericSR):
         self.__weights = {(i, j): 1 for i, j, c in self.__links}
         self.__waypoints = waypoints
 
+    def calculate_apl(self, paths: dict) -> float:
+        """##Calculates the Average Path Length (APL), weighted by demand volume."""
+        total_weighted_length = 0
+        total_demand = 0
+
+        for idx, (s, t, d) in enumerate(self.__demands):
+            path = paths[idx]
+            if len(path) >= 2:
+                total_weighted_length += (len(path) - 1) * d
+                total_demand += d
+
+        return total_weighted_length / total_demand if total_demand > 0 else 0
+
     def solve(self) -> dict:
         """ set weights to inverse capacity and use shortest path algorithm """
 
@@ -27,6 +40,8 @@ class UniformWeights(GenericSR):
 
         pt_duration = time.process_time() - pt_start
         exe_time = time.process_time() - t
+
+        solution["objective_apl"] = self.calculate_apl(solution["paths"])
 
         # update execution time
         solution["execution_time"] = exe_time

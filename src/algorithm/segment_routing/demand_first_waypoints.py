@@ -136,14 +136,14 @@ class DemandsFirstWaypoints(GenericSR):
         loads = {(u, v): best_util_map[u][v] for u, v, in self.__links}
         return loads, waypoints, best_objective
 
-    def calculate_apl(self, paths, demands):
+    def calculate_apl(self, paths):
         """
             Compute the weighted average path length across all demands.
         """
         total_weight = 0
         total_hops = 0
 
-        for idx, (s, t, d) in demands.items():
+        for idx, (s, t, d) in enumerate(self.__demands):
             path = paths.get(idx, [])
             if len(path) < 2:
                 continue  # skip empty or invalid paths
@@ -189,17 +189,16 @@ class DemandsFirstWaypoints(GenericSR):
         t_duration = time.time() - t_start
 
         paths = self.rebuild_paths(waypoints)
-
+        
         solution = {
             "objective": objective,
-            "objective_apl": self.calculate_apl(paths, self.__demands),
+            "objective_apl": self.calculate_apl(paths),
             "execution_time": t_duration,
             "process_time": pt_duration,
             "waypoints": waypoints,
             "weights": self.__weights,
             "loads": loads,
         }
-
         return solution
 
     def get_name(self):
