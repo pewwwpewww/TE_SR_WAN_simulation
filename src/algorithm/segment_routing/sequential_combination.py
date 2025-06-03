@@ -43,6 +43,7 @@ class SequentialCombination(GenericSR):
         solution["execution_time"] = solution_first["execution_time"] + solution_second["execution_time"]
         solution["process_time"] = solution_first["process_time"] + solution_second["process_time"]
         solution["objective"] = solution_second["objective"]
+        solution["objective_apl"] = solution_second["objective_apl"]
         solution["waypoints"] = solution_second["waypoints"]
         solution["weights"] = solution_second["weights"]
         solution["loads"] = solution_second["loads"]
