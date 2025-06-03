@@ -130,19 +130,20 @@ class RandomizedLoadAwarePathSelection(GenericSR):
                     waypoints[idx] = segs
 
         self.__paths = paths
-        loads, _, objective = self.__compute_utilization_and_loads(G)
-        average_utilization = self.__calculate_average_link_utilization(self.__flow_map)
+        loads, _, objective_mlu = self.__compute_utilization_and_loads(G)
+        objective_alu = self.__calculate_average_link_utilization(self.__flow_map)
         wall_time = time.time() - wall_start
         cpu_time = time.process_time() - cpu_start
 
         return {
-            "objective": objective,
+            "objective_mlu": objective_mlu,
+            "objective_alu": objective_alu,
+            "objective_apl": -1,
             "execution_time": wall_time,
             "process_time": cpu_time,
             "waypoints": waypoints,
             "weights": {k: int(v) for k, v in self.__weights.items()},
-            "loads": loads,
-            "avg_util": average_utilization
+            "loads": loads
         }
 
     def get_name(self):

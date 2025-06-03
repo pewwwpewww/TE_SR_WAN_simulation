@@ -165,7 +165,9 @@ class LeastLoadedLinkFirst(GenericSR):
         avg_util = np.mean(list(utilization.values()))
 
         solution = {
-            "objective": max(utilization.values()),
+            "objective_mlu": max(utilization.values()),
+            "objective_alu": sum(utilization.values()) / len(utilization),
+            "objective_apl": -1,
             "execution_time": t_duration,
             "process_time": pt_duration,
             "waypoints": self.__segments,

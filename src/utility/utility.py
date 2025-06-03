@@ -47,7 +47,9 @@ def get_base_name(full_name):
 
 def error_solution():
     return {
-        "objective": -1,
+        "objective_mlu": -1,
+        "objective_alu": -1,
+        "objective_apl": -1,
         "execution_time": -1,
         "waypoints": {},
         "weights": {},

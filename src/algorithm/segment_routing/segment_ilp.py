@@ -230,7 +230,7 @@ class SegmentILP(GenericSR):
         t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded)
         self.__model.optimize()
-        objective = self.__model.objVal
+        objective_mlu = self.__model.objVal
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
@@ -239,17 +239,17 @@ class SegmentILP(GenericSR):
         weights = {(u, v): self.__w[u, v].X for u, v in self.__w}
         loads = {(u, v): self.__utilization[u, v].X for u, v in self.__utilization}
         # Compute ALU (Average Link Utilization)
-        used_links = [val for val in loads.values() if val > 0]
-        alu = sum(used_links) / len(used_links) if used_links else 0
+        objective_alu = sum(loads.values()) / len(loads.values())
 
         solution = {
-            "objective": objective,
+            "objective_mlu": objective_mlu,
+            "objective_alu": objective_alu,
+            "objective_apl": -1,
             "execution_time": t_duration,
             "process_time": pt_duration,
             "waypoints": waypoints,
             "weights": weights,
-            "loads": loads,
-            "avg_util": alu
+            "loads": loads
         }
         return solution
 
