@@ -261,7 +261,11 @@ def snd_real_demands():
 
     # topology provider setup
     topology_provider = "snd_lib"
-    topologies = ['abilene', 'geant', 'germany50']
+    topologies = [
+        'abilene', 
+        'geant', 
+        'germany50'
+    ]
     topology_generator = get_topology_generator(topology_provider, topologies)
 
     # demand provider setup
