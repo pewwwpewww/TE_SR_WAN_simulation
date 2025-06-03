@@ -9,6 +9,7 @@ from algorithm.segment_routing.sequential_combination import SequentialCombinati
 from algorithm.segment_routing.uniform_weights import UniformWeights
 from algorithm.segment_routing.least_loaded_link_first import LeastLoadedLinkFirst
 from algorithm.segment_routing.apl_waypoints import AplWaypoints
+from algorithm.segment_routing.randomized_load_aware import RandomizedLoadAwarePathSelection
 
 def get_algorithm(algorithm_name: str, nodes: list, links: list, demands: list, weights=None, waypoints=None,
                   seed: float = 42, ilp_method: str = None, time_out: int = None, sf: int = 100) -> GenericSR:
@@ -31,6 +32,8 @@ def get_algorithm(algorithm_name: str, nodes: list, links: list, demands: list, 
         algorithm = UniformWeights(nodes, links, demands, weights, waypoints, seed=seed)
     elif algorithm_name == "least_loaded_link_first":
         algorithm = LeastLoadedLinkFirst(nodes, links, demands, weights, waypoints)
+    elif algorithm_name == "randomized_load_aware":
+        algorithm = RandomizedLoadAwarePathSelection(nodes, links, demands, weights, waypoints)
     else:
         err_msg = f"algorithm not found: {algorithm_name}"
         raise Exception(err_msg)

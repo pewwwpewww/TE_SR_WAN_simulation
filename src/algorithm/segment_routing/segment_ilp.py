@@ -248,7 +248,7 @@ class SegmentILP(GenericSR):
         t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded)
         self.__model.optimize()
-        objective = self.__model.objVal
+        objective_mlu = self.__model.objVal
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
@@ -256,16 +256,19 @@ class SegmentILP(GenericSR):
                            idx_s == idx and self.__segments_flows[p, q, idx_s].X == 1] for idx in self.__demands}
         weights = {(u, v): self.__w[u, v].X for u, v in self.__w}
         loads = {(u, v): self.__utilization[u, v].X for u, v in self.__utilization}
-        apl = self.compute_average_path_length()
+        # Compute ALU (Average Link Utilization)
+        objective_alu = sum(loads.values()) / len(loads.values())
+        objective_apl = apl = self.compute_average_path_length()
 
         solution = {
-            "objective": objective,
-            "objective_apl": apl,
+            "objective_mlu": objective_mlu,
+            "objective_alu": objective_alu,
+            "objective_apl": objective_apl,
             "execution_time": t_duration,
             "process_time": pt_duration,
             "waypoints": waypoints,
             "weights": weights,
-            "loads": loads,
+            "loads": loads
         }
         return solution
 

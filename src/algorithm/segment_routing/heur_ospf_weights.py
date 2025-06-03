@@ -286,7 +286,7 @@ class HeurOSPFWeights(GenericSR):
             self.__hashtable2[h2] = True
 
             # evaluate cost and compare
-            n_cost, n_distances, n_loads = self.__evaluate_cost(n_weights)
+            n_cost, n_distances, n_loads  = self.__evaluate_cost(n_weights)
             if best_cost >= n_cost:
                 best_weights, best_cost, best_loads, best_distances = n_weights, n_cost, n_loads, n_distances
 
@@ -359,7 +359,8 @@ class HeurOSPFWeights(GenericSR):
                     self.__reset_secondary_hashtable()
 
             pr_cost, pr_util = cost, util
-        return bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, it, exit_reason, bu_distances
+        objective_alu = sum(bu_loads.values())/len(bu_loads.values())
+        return bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, it, exit_reason, objective_alu, bu_distances
     
     def __calculate_apl(self, bu_distances):
         total_weighted_path_length = 0
@@ -378,13 +379,14 @@ class HeurOSPFWeights(GenericSR):
 
         self.__start_time = t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded and count per core)
-        bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, number_iterations, exit_reason, bu_distances = self.__ospf_heuristic()
+        bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, number_iterations, exit_reason, objective_alu, bu_distances = self.__ospf_heuristic()
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
         solution = dict()
         # best max utilization result
-        solution["objective"] = bu_util
+        solution["objective_mlu"] = bu_util
+        solution["objective_alu"] = objective_alu
         solution["objective_apl"] = self.__calculate_apl(bu_distances)
         solution["execution_time"] = t_duration
         solution["process_time"] = pt_duration
