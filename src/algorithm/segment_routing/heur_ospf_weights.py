@@ -360,14 +360,26 @@ class HeurOSPFWeights(GenericSR):
 
             pr_cost, pr_util = cost, util
         objective_alu = sum(bu_loads.values())/len(bu_loads.values())
-        return bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, it, exit_reason, objective_alu
+        return bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, it, exit_reason, objective_alu, bu_distances
+    
+    def __calculate_apl(self, bu_distances):
+        total_weighted_path_length = 0
+        total_demand_weight = 0
+        for (s,t),d in self.__demands.items():
+            dist = bu_distances[self.__targets.index(t)][s]
+            if dist == float("inf"):
+                continue
+            total_weighted_path_length += d*dist
+            total_demand_weight += d
+        
+        return total_weighted_path_length / total_demand_weight if total_demand_weight != 0 else 0
 
     def solve(self) -> dict:
         """ compute solution """
 
         self.__start_time = t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded and count per core)
-        bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, number_iterations, exit_reason, objective_alu = self.__ospf_heuristic()
+        bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, number_iterations, exit_reason, objective_alu, bu_distances = self.__ospf_heuristic()
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
@@ -375,7 +387,7 @@ class HeurOSPFWeights(GenericSR):
         # best max utilization result
         solution["objective_mlu"] = bu_util
         solution["objective_alu"] = objective_alu
-        solution["objective_apl"] = -1
+        solution["objective_apl"] = self.__calculate_apl(bu_distances)
         solution["execution_time"] = t_duration
         solution["process_time"] = pt_duration
         solution["waypoints"] = self.__waypoints

@@ -8,6 +8,7 @@ from algorithm.segment_routing.segment_ilp import SegmentILP
 from algorithm.segment_routing.sequential_combination import SequentialCombination
 from algorithm.segment_routing.uniform_weights import UniformWeights
 from algorithm.segment_routing.least_loaded_link_first import LeastLoadedLinkFirst
+from algorithm.segment_routing.apl_waypoints import AplWaypoints
 from algorithm.segment_routing.randomized_load_aware import RandomizedLoadAwarePathSelection
 
 def get_algorithm(algorithm_name: str, nodes: list, links: list, demands: list, weights=None, waypoints=None,
@@ -15,6 +16,8 @@ def get_algorithm(algorithm_name: str, nodes: list, links: list, demands: list, 
     algorithm_name = algorithm_name.lower()
     if algorithm_name == "demand_first_waypoints":
         algorithm = DemandsFirstWaypoints(nodes, links, demands, weights, waypoints)
+    elif algorithm_name == "apl_waypoints":
+        algorithm = AplWaypoints(nodes, links, demands, weights, waypoints)
     elif algorithm_name == "heur_ospf_weights":
         algorithm = HeurOSPFWeights(nodes, links, demands, weights, waypoints, seed=seed, time_out=time_out)
     elif algorithm_name == "inverse_capacity":

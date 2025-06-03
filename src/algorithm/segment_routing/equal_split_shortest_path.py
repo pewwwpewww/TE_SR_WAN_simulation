@@ -30,6 +30,7 @@ class EqualSplitShortestPath(GenericSR):
         self.__all_shortest_paths = dict()
         self.__nx_graph = nx.DiGraph()
         self.__flow_sum = dict()
+        self.__paths = []
 
         self.__create_nx_graph()
         self.__init_flow_sum_map()
@@ -88,8 +89,16 @@ class EqualSplitShortestPath(GenericSR):
         t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded)
         self.__get_all_shortest_paths_generator()
+
+        collected_paths = {}
+
         for idx in self.__demands:
             s, t, d = self.__demands[idx]
+            if (s,t) not in self.__all_shortest_paths:
+                self.__all_shortest_paths[s, t] = list(self.__all_shortest_paths_generators[s, t])
+                
+            path = self.__all_shortest_paths[s, t][0]
+            self.__paths.append(path)
             self.__add_demand_update_objective(s, t, d)
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
@@ -103,7 +112,8 @@ class EqualSplitShortestPath(GenericSR):
             "process_time": pt_duration,
             "waypoints": self.__segments,
             "weights": self.__weights,
-            "loads": utilization
+            "loads": utilization,
+            "paths": self.__paths
         }
         return solution
 

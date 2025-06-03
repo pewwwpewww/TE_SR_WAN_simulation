@@ -222,6 +222,24 @@ class SegmentILP(GenericSR):
         if self.__method == "WAYPOINTS":  # ILP (not mentioned in formulation)
             self.__gp_c_fix_weights()
 
+    def compute_average_path_length(self):
+        total_path_length = 0
+        total_demand_value = 0
+
+        for idx, (s,t,d) in self.__demands.items():
+            #Hops for a segment p,q
+            hops = 0
+            for (p,q) in self.__segments:
+                for(u,v,_) in self.__links:
+                    #Check for any flow >0 and count the hop
+                    if self.__f_link[p,q,u,v].X > 0:
+                        if self.__segments_flows[p,q,idx].X == 1:
+                            hops += 1
+            total_path_length += hops * d
+            total_demand_value += d
+        return total_path_length / total_demand_value if total_demand_value > 0 else 0
+
+
     def solve(self) -> dict:
         """ Solves the MIP
         :return: dict with execution time, objective, segments and weight-assignment
@@ -240,11 +258,12 @@ class SegmentILP(GenericSR):
         loads = {(u, v): self.__utilization[u, v].X for u, v in self.__utilization}
         # Compute ALU (Average Link Utilization)
         objective_alu = sum(loads.values()) / len(loads.values())
+        objective_apl = apl = self.compute_average_path_length()
 
         solution = {
             "objective_mlu": objective_mlu,
             "objective_alu": objective_alu,
-            "objective_apl": -1,
+            "objective_apl": objective_apl,
             "execution_time": t_duration,
             "process_time": pt_duration,
             "waypoints": waypoints,

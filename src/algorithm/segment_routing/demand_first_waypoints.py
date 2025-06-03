@@ -142,6 +142,49 @@ class DemandsFirstWaypoints(GenericSR):
         loads = {(u, v): best_util_map[u][v] for u, v, in self.__links}
         return loads, waypoints, best_objective_mlu, objective_alu, -1
 
+    def calculate_apl(self, paths):
+        """
+            Compute the weighted average path length across all demands.
+        """
+        total_weight = 0
+        total_hops = 0
+
+        for idx, (s, t, d) in enumerate(self.__demands):
+            path = paths.get(idx, [])
+            if len(path) < 2:
+                continue  # skip empty or invalid paths
+            total_weight += d
+            total_hops += (len(path) - 1) * d  # hops = len(path) - 1
+
+        return total_hops / total_weight if total_weight > 0 else 0
+
+    def rebuild_paths(self, waypoint_segments: dict) -> dict:
+        """
+        ## Build full hop-by-hop paths for each demand using Dijkstra(!!because here the graph is weighted) over each segment.
+        """
+        paths = {}
+
+        for demand_id, segments in waypoint_segments.items():
+            full_path = []
+
+            for src, dst in segments:
+                dijkstra = nk.distance.Dijkstra(self.__g, src, self.__weights)
+                dijkstra.run()
+                segment = dijkstra.getPath(dst)
+
+                if not segment or len(segment) < 2 :
+                    continue #skip empty segments
+
+                # # merge segments carefully to avoid duplicate nodes
+                if full_path and full_path[-1] == segment[0]:
+                    full_path += segment[1:]
+                else:
+                    full_path += segment
+
+            paths[demand_id] = full_path
+
+        return paths
+
     def solve(self) -> dict:
         """ compute solution """
 
@@ -151,17 +194,18 @@ class DemandsFirstWaypoints(GenericSR):
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
+        paths = self.rebuild_paths(waypoints)
+        
         solution = {
             "objective_mlu": objective_mlu,
             "objective_alu": objective_alu,
-            "objective_apl": objective_apl,
+            "objective_apl": self.calculate_apl(paths),
             "execution_time": t_duration,
             "process_time": pt_duration,
             "waypoints": waypoints,
             "weights": self.__weights,
             "loads": loads
         }
-
         return solution
 
     def get_name(self):
