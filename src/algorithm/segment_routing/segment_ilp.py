@@ -238,6 +238,10 @@ class SegmentILP(GenericSR):
                            idx_s == idx and self.__segments_flows[p, q, idx_s].X == 1] for idx in self.__demands}
         weights = {(u, v): self.__w[u, v].X for u, v in self.__w}
         loads = {(u, v): self.__utilization[u, v].X for u, v in self.__utilization}
+        # Compute ALU (Average Link Utilization)
+        used_links = [val for val in loads.values() if val > 0]
+        alu = sum(used_links) / len(used_links) if used_links else 0
+
         solution = {
             "objective": objective,
             "execution_time": t_duration,
@@ -245,6 +249,7 @@ class SegmentILP(GenericSR):
             "waypoints": waypoints,
             "weights": weights,
             "loads": loads,
+            "avg_util": alu
         }
         return solution
 

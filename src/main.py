@@ -94,6 +94,7 @@ def all_topologies_synthetic_demands():
         "inverse_capacity",
         "sequential_combination",
         "least_loaded_link_first",
+        "randomized_load_aware",
     ]
     ilp_method = ""
 
@@ -204,6 +205,7 @@ def abilene_all_algorithms():
         ("segment_ilp", "WAYPOINTS"),
         ("segment_ilp", "JOINT"),
         ("least_loaded_link_first", ""),
+        ("randomized_load_aware", ""),
     ]
 
     # topology provider setup
@@ -249,6 +251,7 @@ def snd_real_demands():
         "inverse_capacity",
         "sequential_combination",
         "least_loaded_link_first",
+        "randomized_load_aware",
     ]
     ilp_method = ""
 

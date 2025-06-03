@@ -36,7 +36,8 @@ algo_c_map = {
     'ILP Waypoints': "mediumvioletred",
     'JointHeur': "seagreen",
     'ILP Joint': "darkgreen",
-    'LLLF': "darkgrey"
+    'LLLF': "darkgrey",
+    'RandomLoadAware': "red"
 }
 
 # maps display name to internal name of topologies
@@ -264,6 +265,7 @@ def prepare_data_and_plot(df, title, plot_type, plotting_value):
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("DemandFirstWaypoints", "GreedyWaypoints")
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("SequentialCombination", "JointHeur")
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("LeastLoadedLinkFirst", "LLLF")
+    df["algorithm_complete"] = df["algorithm_complete"].str.replace("RandomizedLoadAware", "RandomLoadAware")
 
     # beautify topology names
     df["topology_name"] = df["topology_name"].str.lower().apply(lambda x: top_n_map[x])
@@ -302,7 +304,7 @@ def prepare_data_and_plot(df, title, plot_type, plotting_value):
             y_lim_top = 8.5
             plot_file = os.path.join(out_path, f"{plot_type}_{plotting_value}_{i}.pdf")
             create_box_plot(df_i, "topology_name", plotting_value, "algorithm_complete", plot_file, x_label="",
-                            y_label="Execution Time" if plotting_value=="execution_time" else "Max. Normalized Link Utilization", fig_size=(width, 8),
+                            y_label="Execution Time" if plotting_value=="execution_time" else "Average Link Utilization" if plotting_value == "avg_util" else "Max. Normalized Link Utilization", fig_size=(width, 8),
                             title=title if i == 0 else "", y_lim_top=y_lim_top)
 
         df = filter_biggest_12_topologies(df)
@@ -311,7 +313,7 @@ def prepare_data_and_plot(df, title, plot_type, plotting_value):
         y_lim_top = 5.1
         plot_file = os.path.join(out_path, f"12_biggest_of_{plot_type}_{plotting_value}.pdf")
         create_box_plot(df, "topology_name", plotting_value, "algorithm_complete", plot_file, x_label="",
-                        y_label="Execution Time" if plotting_value=="execution_time" else "Max. Normalized Link Utilization", fig_size=(width, 8), title=title,
+                        y_label="Execution Time" if plotting_value=="execution_time" else "Average Link Utilization" if plotting_value == "avg_util" else "Max. Normalized Link Utilization", fig_size=(width, 8), title=title,
                         y_lim_top=y_lim_top)
     else:
         # PLOT FIGURE 4 + 5
@@ -320,7 +322,7 @@ def prepare_data_and_plot(df, title, plot_type, plotting_value):
         if plot_type == "all_algorithms":
             plot_file = os.path.join(out_path, f"all_algorithms_abilene_{plotting_value}.pdf")
         create_box_plot(df, "topology_name", plotting_value, "algorithm_complete", plot_file, x_label="",
-                        y_label="Execution Time" if plotting_value=="execution_time" else "Max. Normalized Link Utilization", fig_size=(8, 6), title=title,
+                        y_label="Execution Time" if plotting_value=="execution_time" else "Average Link Utilization" if plotting_value == "avg_util" else "Max. Normalized Link Utilization", fig_size=(8, 6), title=title,
                         y_lim_top=y_lim_top)
     return
 
@@ -369,4 +371,5 @@ if __name__ == "__main__":
         print(f"{HIGHLIGHT}{title_i} - {plot_type_i}{CEND}")
         prepare_data_and_plot(df_i, title_i, plot_type_i, "objective")
         prepare_data_and_plot(df_i, title_i, plot_type_i, "execution_time")
+        prepare_data_and_plot(df_i, title_i, plot_type_i, "avg_util")
         print()
