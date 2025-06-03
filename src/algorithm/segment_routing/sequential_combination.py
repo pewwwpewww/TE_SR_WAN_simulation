@@ -46,6 +46,9 @@ class SequentialCombination(GenericSR):
         solution["waypoints"] = solution_second["waypoints"]
         solution["weights"] = solution_second["weights"]
         solution["loads"] = solution_second["loads"]
+        #Calculate ALU
+        loads = solution["loads"]
+        solution["avg_util"] = sum(loads.values()) / len(loads) if loads else 0.0
         return solution
 
     def get_name(self):

@@ -98,6 +98,11 @@ class DemandsFirstWaypoints(GenericSR):
         objective = np.max(util_map)
         return util_map, objective
 
+    def __compute_average_utilization(self, flow_map):
+        util_map = flow_map / self.__capacity_map
+        average_utilization = np.mean(util_map)
+        return util_map, average_utilization
+
     def __update_flow_map(self, sp_fraction_map, flow_map, s, t, d, waypoint):
         new_flow_map = flow_map - sp_fraction_map[s][t] * d
         new_flow_map += sp_fraction_map[s][waypoint] * d
@@ -122,6 +127,7 @@ class DemandsFirstWaypoints(GenericSR):
                     continue
                 flow_map = self.__update_flow_map(sp_fraction_map, best_flow_map, s, t, d, waypoint)
                 util_map, objective = self.__compute_utilization(flow_map)
+                util_map, avg_util = self.__compute_average_utilization(flow_map)
 
                 if objective < best_objective:
                     best_flow_map = flow_map
@@ -134,14 +140,14 @@ class DemandsFirstWaypoints(GenericSR):
             else:
                 waypoints[d_idx] = [(s, t)]
         loads = {(u, v): best_util_map[u][v] for u, v, in self.__links}
-        return loads, waypoints, best_objective
+        return loads, waypoints, best_objective, avg_util
 
     def solve(self) -> dict:
         """ compute solution """
 
         self.__start_time = t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded and count per core)
-        loads, waypoints, objective = self.__demands_first_waypoints()
+        loads, waypoints, objective, avg_util = self.__demands_first_waypoints()
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
@@ -152,6 +158,7 @@ class DemandsFirstWaypoints(GenericSR):
             "waypoints": waypoints,
             "weights": self.__weights,
             "loads": loads,
+            "avg_util": avg_util
         }
 
         return solution

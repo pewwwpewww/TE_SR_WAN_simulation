@@ -257,8 +257,9 @@ class HeurOSPFWeights(GenericSR):
         for u, v in self.__links:
             loads[u, v] = acc_flows[u, v] / self.__capacities[u, v]
             cost += self.__get_link_cost(loads[u, v])
+            avg_util = np.mean(list(loads.values()))
 
-        return cost, distances, loads
+        return cost, distances, loads, avg_util
 
     def __explore_neighborhood(self, sample_size: int, c_weights, c_distances, c_loads):
         """ for a given weights vector find the best neighbor weights vector"""
@@ -286,18 +287,18 @@ class HeurOSPFWeights(GenericSR):
             self.__hashtable2[h2] = True
 
             # evaluate cost and compare
-            n_cost, n_distances, n_loads = self.__evaluate_cost(n_weights)
+            n_cost, n_distances, n_loads, n_avg_util  = self.__evaluate_cost(n_weights)
             if best_cost >= n_cost:
-                best_weights, best_cost, best_loads, best_distances = n_weights, n_cost, n_loads, n_distances
+                best_weights, best_cost, best_loads, best_distances, best_avg_util = n_weights, n_cost, n_loads, n_distances, n_avg_util
 
         self.__hashtable1[h1] = True
-        return best_weights, best_cost, best_loads, best_distances
+        return best_weights, best_cost, best_loads, best_distances, best_avg_util
 
     def __ospf_heuristic(self):
         """ main procedure """
         # evaluate initial weights
         weights = self.__init_weights if self.__init_weights else self.__get_random_weights()
-        cost, distances, loads = self.__evaluate_cost(weights)
+        cost, distances, loads, avg_util = self.__evaluate_cost(weights)
         # bc_ := best cost
         # bu_ := best (= lowest) max link utilization
         bc_cost = bu_cost = cost
@@ -320,7 +321,7 @@ class HeurOSPFWeights(GenericSR):
         for it in range(self.__iterations):
             # explore neighborhood
             sample_size = max(int(neighborhood_size * sample_factor), 5)  # max(..,5) is for too small topologies
-            weights, cost, loads, distances = self.__explore_neighborhood(sample_size, weights, distances, loads)
+            weights, cost, loads, distances, avg_util = self.__explore_neighborhood(sample_size, weights, distances, loads)
             util = max(loads.values())
 
             # exit criteria (1) timeout
@@ -359,14 +360,14 @@ class HeurOSPFWeights(GenericSR):
                     self.__reset_secondary_hashtable()
 
             pr_cost, pr_util = cost, util
-        return bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, it, exit_reason
+        return bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, it, exit_reason, avg_util
 
     def solve(self) -> dict:
         """ compute solution """
 
         self.__start_time = t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded and count per core)
-        bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, number_iterations, exit_reason = self.__ospf_heuristic()
+        bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, number_iterations, exit_reason, avg_util = self.__ospf_heuristic()
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
@@ -379,6 +380,7 @@ class HeurOSPFWeights(GenericSR):
         solution["weights"] = bu_weights
         solution["loads"] = bu_loads
         solution["cost"] = bu_cost
+        solution["avg_util"] = avg_util
 
         # bc := best cost result
         solution["bc_objective"] = bc_util
