@@ -95,15 +95,15 @@ class EqualSplitShortestPath(GenericSR):
         t_duration = time.time() - t_start
         utilization = {(i, j): self.__flow_sum[i, j] / self.__nx_graph[i][j]["capacity"] for i, j, _ in
                        self.__links}
-        avg_util = sum(utilization.values()) / len(utilization)
         solution = {
-            "objective": max(utilization.values()),
+            "objective_mlu": max(utilization.values()),
+            "objective_alu": sum(utilization.values()) / len(utilization),
+            "objective_apl": -1,
             "execution_time": t_duration,
             "process_time": pt_duration,
             "waypoints": self.__segments,
             "weights": self.__weights,
-            "loads": utilization,
-            "avg_util": avg_util
+            "loads": utilization
         }
         return solution
 

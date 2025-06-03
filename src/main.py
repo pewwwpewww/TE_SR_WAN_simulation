@@ -39,7 +39,7 @@ def work(algorithm_name, links, n, demands, ilp_method, setup, time_out, res_han
         result_dict.update(err_solution)
         print(f"{HIGHLIGHT}Error on: {setup}\n msg: {str(ex)}{CEND}")
     res_handler.insert_result(result_dict)
-    return success, result_dict["objective"]
+    return success, result_dict["objective_mlu"], result_dict["objective_alu"], result_dict["objective_apl"]
 
 
 def get_demands_generator_mcf_maximal(n, links, active_pairs_fraction, seed):
@@ -182,10 +182,12 @@ def all_topologies_synthetic_demands():
                                            topology, topology_provider, ACTIVE_PAIRS_FRACTION, mcf_method, SEED)
 
                     print(f"submit test: {test_idx} ({topology}, {algorithm}, D_idx = {sample_idx})")
-                    success, objective = work(algorithm, links.copy(), n, demands.copy(), ilp_method, setup,
+                    success, objective_mlu, objective_alu, objective_apl = work(algorithm, links.copy(), n, demands.copy(), ilp_method, setup,
                                               ALGORITHM_TIME_OUT, result_handler)
-                    print(f"Test-ID: {test_idx}, success: {success} [{algorithm}, "
-                          f"{topology}, {sample_idx}]: objective: {round(objective, 4)}")
+                    print(  f"Test-ID: {test_idx}, success: {success} [{algorithm}, "
+                                f"{topology}, {sample_idx}]: objective_mlu: {round(objective_mlu, 4)}, " 
+                                    f"objective_alu: {round(objective_alu, 4)}, " 
+                                    f"objective_apl: {round(objective_apl, 4)}")
                     test_idx += 1
     return
 
@@ -232,10 +234,12 @@ def abilene_all_algorithms():
                                        topology, topology_provider, ACTIVE_PAIRS_FRACTION, mcf_method, SEED)
 
                 print(f"submit test: {test_idx} ({topology}, {algorithm} {ilp_method}, D_idx = {sample_idx})")
-                success, objective = work(algorithm, links.copy(), n, demands.copy(), ilp_method, setup,
+                success, objective_mlu, objective_alu, objective_apl = work(algorithm, links.copy(), n, demands.copy(), ilp_method, setup,
                                           ALGORITHM_TIME_OUT, result_handler)
-                print(f"Test-ID: {test_idx}, success: {success} [{algorithm} {ilp_method}, "
-                      f"{topology}, {sample_idx}]: objective: {round(objective, 4)}")
+                print(  f"Test-ID: {test_idx}, success: {success} [{algorithm} {ilp_method}, "
+                            f"{topology}, {sample_idx}]: objective_mlu: {round(objective_mlu, 4)}, " 
+                                f"objective_alu: {round(objective_alu, 4)}, " 
+                                f"objective_apl: {round(objective_apl, 4)}")
                 test_idx += 1
     return
 
@@ -278,10 +282,12 @@ def snd_real_demands():
                                        topology, topology_provider, 1, mcf_method, SEED)
 
                 print(f"submit test: {test_idx} ({topology}, {algorithm}, D_idx = {sample_idx})")
-                success, objective = work(algorithm, links.copy(), n, demands.copy(), ilp_method, setup,
+                success, objective_mlu, objective_alu, objective_apl = work(algorithm, links.copy(), n, demands.copy(), ilp_method, setup,
                                           ALGORITHM_TIME_OUT, result_handler)
-                print(f"Test-ID: {test_idx}, success: {success} [{algorithm}, "
-                      f"{topology}, {sample_idx}]: objective: {round(objective, 4)}")
+                print(  f"Test-ID: {test_idx}, success: {success} [{algorithm}, "
+                            f"{topology}, {sample_idx}]: objective_mlu: {round(objective_mlu, 4)}, " 
+                                f"objective_alu: {round(objective_alu, 4)}, " 
+                                f"objective_apl: {round(objective_apl, 4)}")
                 test_idx += 1
     return
 

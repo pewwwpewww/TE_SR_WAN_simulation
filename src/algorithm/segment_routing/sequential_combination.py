@@ -42,13 +42,15 @@ class SequentialCombination(GenericSR):
 
         solution["execution_time"] = solution_first["execution_time"] + solution_second["execution_time"]
         solution["process_time"] = solution_first["process_time"] + solution_second["process_time"]
-        solution["objective"] = solution_second["objective"]
+        solution["objective_mlu"] = solution_second["objective_mlu"],
+        solution["objective_alu"] = solution_second["objective_alu"],
+        solution["objective_apl"] = solution_second["objective_apl"],
         solution["waypoints"] = solution_second["waypoints"]
         solution["weights"] = solution_second["weights"]
         solution["loads"] = solution_second["loads"]
-        #Calculate ALU
-        loads = solution["loads"]
-        solution["avg_util"] = sum(loads.values()) / len(loads) if loads else 0.0
+        # Calculate ALU
+        # loads = solution["loads"]
+        # solution["avg_util"] = sum(loads.values()) / len(loads) if loads else 0.0
         return solution
 
     def get_name(self):

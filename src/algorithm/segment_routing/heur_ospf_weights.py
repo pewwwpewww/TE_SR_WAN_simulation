@@ -360,27 +360,28 @@ class HeurOSPFWeights(GenericSR):
                     self.__reset_secondary_hashtable()
 
             pr_cost, pr_util = cost, util
-        return bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, it, exit_reason, avg_util
+        return bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, it, exit_reason, sum(bu_loads.values())/len(bu_loads.values())
 
     def solve(self) -> dict:
         """ compute solution """
 
         self.__start_time = t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded and count per core)
-        bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, number_iterations, exit_reason, avg_util = self.__ospf_heuristic()
+        bc_weights, bc_cost, bc_loads, bc_util, bu_weights, bu_cost, bu_loads, bu_util, number_iterations, exit_reason, objective_alu = self.__ospf_heuristic()
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 
         solution = dict()
         # best max utilization result
-        solution["objective"] = bu_util
+        solution["objective_mlu"] = bu_util,
+        solution["objective_alu"] = objective_alu,
+        solution["objective_apl"] = -1,
         solution["execution_time"] = t_duration
         solution["process_time"] = pt_duration
         solution["waypoints"] = self.__waypoints
         solution["weights"] = bu_weights
         solution["loads"] = bu_loads
         solution["cost"] = bu_cost
-        solution["avg_util"] = avg_util
 
         # bc := best cost result
         solution["bc_objective"] = bc_util
