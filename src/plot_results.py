@@ -37,7 +37,8 @@ algo_c_map = {
     'JointHeur': "seagreen",
     'ILP Joint': "darkgreen",
     'LLLF': "darkgrey",
-    'RandomLoadAware': "red"
+    'RandomLoadAware': "red",
+    'APLWaypoints': 'purple'
 }
 
 # maps display name to internal name of topologies
@@ -265,6 +266,7 @@ def prepare_data_and_plot(df, title, plot_type, plotting_value):
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("DemandFirstWaypoints", "GreedyWaypoints")
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("SequentialCombination", "JointHeur")
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("LeastLoadedLinkFirst", "LLLF")
+    df["algorithm_complete"] = df["algorithm_complete"].str.replace("APLWaypoints", "APLWaypoints")
     df["algorithm_complete"] = df["algorithm_complete"].str.replace("RandomizedLoadAware", "RandomLoadAware")
 
     # beautify topology names

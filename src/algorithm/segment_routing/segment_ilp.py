@@ -258,7 +258,7 @@ class SegmentILP(GenericSR):
         loads = {(u, v): self.__utilization[u, v].X for u, v in self.__utilization}
         # Compute ALU (Average Link Utilization)
         objective_alu = sum(loads.values()) / len(loads.values())
-        objective_apl = apl = self.compute_average_path_length()
+        objective_apl = self.compute_average_path_length()
 
         solution = {
             "objective_mlu": objective_mlu,

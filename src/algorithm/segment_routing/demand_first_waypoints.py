@@ -109,39 +109,6 @@ class DemandsFirstWaypoints(GenericSR):
         new_flow_map += sp_fraction_map[waypoint][t] * d
         return new_flow_map
 
-    def __demands_first_waypoints(self):
-        """ main procedure """
-        distances = self.__compute_distances()
-        sp_fraction_map = self.__get_shortest_path_fraction_map(distances)
-        best_flow_map = self.__get_flow_map(sp_fraction_map)
-        best_util_map, best_objective_mlu = self.__compute_utilization(best_flow_map)
-
-        waypoints = dict()
-        sorted_demand_idx_map = dict(zip(range(len(self.__demands)), np.array(self.__demands)[:, 2].argsort()[::-1]))
-        for d_map_idx in range(len(self.__demands)):
-            d_idx = sorted_demand_idx_map[d_map_idx]
-            s, t, d = self.__demands[d_idx]
-            best_waypoint = None
-            for waypoint in range(self.__n):
-                if waypoint == s or waypoint == t:
-                    continue
-                flow_map = self.__update_flow_map(sp_fraction_map, best_flow_map, s, t, d, waypoint)
-                util_map, objective_mlu = self.__compute_utilization(flow_map)
-                util_map, objective_alu = self.__compute_average_utilization(flow_map)
-
-                if objective_mlu < best_objective_mlu:
-                    best_flow_map = flow_map
-                    best_util_map = util_map
-                    best_objective_mlu = objective_mlu
-                    best_waypoint = waypoint
-
-            if best_waypoint is not None:
-                waypoints[d_idx] = [(s, best_waypoint), (best_waypoint, t)]
-            else:
-                waypoints[d_idx] = [(s, t)]
-        loads = {(u, v): best_util_map[u][v] for u, v, in self.__links}
-        return loads, waypoints, best_objective_mlu, objective_alu, -1
-
     def calculate_apl(self, paths):
         """
             Compute the weighted average path length across all demands.
@@ -184,13 +151,46 @@ class DemandsFirstWaypoints(GenericSR):
             paths[demand_id] = full_path
 
         return paths
+    
+    def __demands_first_waypoints(self):
+        """ main procedure """
+        distances = self.__compute_distances()
+        sp_fraction_map = self.__get_shortest_path_fraction_map(distances)
+        best_flow_map = self.__get_flow_map(sp_fraction_map)
+        best_util_map, best_objective_mlu = self.__compute_utilization(best_flow_map)
+
+        waypoints = dict()
+        sorted_demand_idx_map = dict(zip(range(len(self.__demands)), np.array(self.__demands)[:, 2].argsort()[::-1]))
+        for d_map_idx in range(len(self.__demands)):
+            d_idx = sorted_demand_idx_map[d_map_idx]
+            s, t, d = self.__demands[d_idx]
+            best_waypoint = None
+            for waypoint in range(self.__n):
+                if waypoint == s or waypoint == t:
+                    continue
+                flow_map = self.__update_flow_map(sp_fraction_map, best_flow_map, s, t, d, waypoint)
+                util_map, objective_mlu = self.__compute_utilization(flow_map)
+                util_map, objective_alu = self.__compute_average_utilization(flow_map)
+
+                if objective_mlu < best_objective_mlu:
+                    best_flow_map = flow_map
+                    best_util_map = util_map
+                    best_objective_mlu = objective_mlu
+                    best_waypoint = waypoint
+
+            if best_waypoint is not None:
+                waypoints[d_idx] = [(s, best_waypoint), (best_waypoint, t)]
+            else:
+                waypoints[d_idx] = [(s, t)]
+        loads = {(u, v): best_util_map[u][v] for u, v, in self.__links}
+        return loads, waypoints, best_objective_mlu, objective_alu
 
     def solve(self) -> dict:
         """ compute solution """
 
         self.__start_time = t_start = time.time()  # sys wide time
         pt_start = time.process_time()  # count process time (e.g. sleep excluded and count per core)
-        loads, waypoints, objective_mlu, objective_alu, objective_apl = self.__demands_first_waypoints()
+        loads, waypoints, objective_mlu, objective_alu = self.__demands_first_waypoints()
         pt_duration = time.process_time() - pt_start
         t_duration = time.time() - t_start
 

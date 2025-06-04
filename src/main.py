@@ -90,9 +90,9 @@ def all_topologies_synthetic_demands():
     # algorithm settings
     algorithms = [
         "demand_first_waypoints",
-        "heur_ospf_weights",
+        # "heur_ospf_weights",
         "inverse_capacity",
-        "sequential_combination",
+        # "sequential_combination",
         "least_loaded_link_first",
         "apl_waypoints",
         "randomized_load_aware",
@@ -253,9 +253,9 @@ def snd_real_demands():
     # algorithm settings
     algorithms = [
         "demand_first_waypoints",
-        "heur_ospf_weights",
+        # "heur_ospf_weights",
         "inverse_capacity",
-        "sequential_combination",
+        # "sequential_combination",
         "least_loaded_link_first",
         "apl_waypoints",
         "randomized_load_aware",

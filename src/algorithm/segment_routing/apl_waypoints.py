@@ -289,10 +289,10 @@ class AplWaypoints(GenericSR):
         best_w_apl = self.__calculate_weighted_apl()
         
         #Combine for objective
-        best_objective = self.__calculate_objective(best_w_apl, best_mlu)
+        best_objective_apl = self.__calculate_objective(best_w_apl, best_mlu)
         
         #For updating the objective properly
-        original_objective = best_objective
+        original_objective = best_objective_apl
         
         #Sort demands 
         original_indices = list(range(len(self.__demands)))
@@ -312,10 +312,10 @@ class AplWaypoints(GenericSR):
                 #update the flow and the mlu aswell as the util_array
                 flow_array = self.__update_flows(self.__flows, s, t, d, waypoint)
                 util_array, mlu = self.__calculate_utilization(flow_array)
-                objective = self.__calculate_objective(w_apl, mlu)
+                objective_apl = self.__calculate_objective(w_apl, mlu)
                 
-                if objective < best_objective:
-                    best_objective = objective
+                if objective_apl < best_objective_apl:
+                    best_objective_apl = objective_apl
                     best_waypoint = waypoint
                     best_util_array = util_array
                     best_flows = flow_array
@@ -327,34 +327,36 @@ class AplWaypoints(GenericSR):
                 
         loads =  self.__calculate_loads(best_util_array)
         
-        return loads, waypoints, best_objective
+        return loads, waypoints, best_objective_apl
                 
             
     '''
         Computes a solution for the problem and returns according to generic_sr
     '''
     def solve(self) -> dict:
-         self.__start_time = t_start = time.time() #start timer sys wide
-         pt_start = time.process_time() #start process timer
+        self.__start_time = t_start = time.time() #start timer sys wide
+        pt_start = time.process_time() #start process timer
+        
+        #Execute process 
+        loads, waypoints, objective_apl = self.__apl_optimization()
+        
+        pt_duration = time.process_time() - pt_start
+        t_duration =time.time() - t_start
+        
+        #print(f"Waypoints: {waypoints}")
+        
+        solution = {
+            "objective_mlu": max(loads.values()),
+            "objective_alu": sum(loads.values()) / len(loads),
+            "objective_apl": objective_apl,
+            "execution_time": t_duration,
+            "process_time": pt_duration,
+            "waypoints": waypoints,
+            "weights": self.__weights,
+            "loads": loads,
+        }
          
-         #Execute process 
-         loads, waypoints, objective = self.__apl_optimization()
-         
-         pt_duration = time.process_time() - pt_start
-         t_duration =time.time() - t_start
-         
-         #print(f"Waypoints: {waypoints}")
-         
-         solution = {
-             "objective": objective,
-             "execution_time": t_duration,
-             "process_time": pt_duration,
-             "waypoints": waypoints,
-             "weights": self.__weights,
-             "loads": loads,
-         }
-         
-         return solution
+        return solution
          
     def get_name(self):
         """ returns name of algorithm """
