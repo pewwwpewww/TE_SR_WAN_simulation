@@ -289,7 +289,7 @@ class AplWaypoints(GenericSR):
         best_w_apl = self.__calculate_weighted_apl()
         
         #Combine for objective
-        best_objective_apl = self.__calculate_objective(best_w_apl, best_mlu)
+        best_objective = self.__calculate_objective(best_w_apl, best_mlu)
         
         #For updating the objective properly
         original_objective = best_objective_apl
@@ -312,10 +312,11 @@ class AplWaypoints(GenericSR):
                 #update the flow and the mlu aswell as the util_array
                 flow_array = self.__update_flows(self.__flows, s, t, d, waypoint)
                 util_array, mlu = self.__calculate_utilization(flow_array)
-                objective_apl = self.__calculate_objective(w_apl, mlu)
+                objective = self.__calculate_objective(w_apl, mlu)
                 
-                if objective_apl < best_objective_apl:
+                if objective < best_objective:
                     best_objective_apl = objective_apl
+                    best_w_apl = w_apl
                     best_waypoint = waypoint
                     best_util_array = util_array
                     best_flows = flow_array
@@ -327,7 +328,7 @@ class AplWaypoints(GenericSR):
                 
         loads =  self.__calculate_loads(best_util_array)
         
-        return loads, waypoints, best_objective_apl
+        return loads, waypoints, best_w_apl
                 
             
     '''
