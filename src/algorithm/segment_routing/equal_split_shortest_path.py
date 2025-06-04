@@ -113,7 +113,7 @@ class EqualSplitShortestPath(GenericSR):
             "waypoints": self.__segments,
             "weights": self.__weights,
             "loads": utilization,
-            #"paths": self.__paths
+            "paths": self.__paths
         }
         return solution
 
