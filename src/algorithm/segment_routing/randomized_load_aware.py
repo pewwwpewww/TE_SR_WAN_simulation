@@ -1,6 +1,7 @@
 import time
 import random
 import networkx as nx
+from itertools import islice
 
 from algorithm.generic_sr import GenericSR
 from algorithm.segment_routing.sr_utility import SRUtility
@@ -42,20 +43,19 @@ class RandomizedLoadAwarePathSelection(GenericSR):
             G.add_edge(u, v, capacity=c, load=0, weight=int(self.__weights.get((u, v), 1)))
         return G
 
-    def __random_simple_paths(self, G, s, t, k):
+    def __k_shortest_paths(self, G, s, t, k):
         try:
-            paths = list(nx.all_simple_paths(G, source=s, target=t, cutoff=10))
-            return random.sample(paths, min(k, len(paths)))
-        except nx.NetworkXNoPath:
+            return list(islice(nx.shortest_simple_paths(G, s, t, weight="weight"), k))
+        except (nx.NetworkXNoPath, nx.NodeNotFound):
             return []
 
-    def __path_score(self, G, path):
+    def __path_score(self, path, demand, current_flow_map):
         score = 0
         for u, v in zip(path[:-1], path[1:]):
-            edge_data = G.get_edge_data(u, v)
-            if edge_data:
-                utilization = edge_data["load"] / edge_data["capacity"] if edge_data["capacity"] > 0 else float("inf")
-                score += utilization
+            load = current_flow_map.get((u, v), 0) + demand
+            capacity = self.__capacities[(u, v)]
+            util = load / capacity
+            score += util
         return score
 
     def __create_flow_map(self, paths: dict) -> dict:
@@ -100,6 +100,7 @@ class RandomizedLoadAwarePathSelection(GenericSR):
         return total_utilization / len(flow_map)
 
     def solve(self) -> dict:
+        self.__flow_map = {link: 0 for link in self.__links}
         wall_start = time.time()
         cpu_start = time.process_time()
 
@@ -108,18 +109,19 @@ class RandomizedLoadAwarePathSelection(GenericSR):
         paths = {}
 
         for idx, (s, t, d) in self.__demands.items():
-            candidates = self.__random_simple_paths(G, s, t, self.__K)
-            best_path = None
+            candidates = self.__k_shortest_paths(G, s, t, self.__K)
             best_score = float("inf")
+            best_path = None
 
-            for p in candidates:
-                score = self.__path_score(G, p)
+            for path in candidates:
+                score = self.__path_score(path, d, self.__flow_map)
                 if score < best_score:
                     best_score = score
-                    best_path = p
+                    best_path = path
 
             if best_path:
                 for u, v in zip(best_path[:-1], best_path[1:]):
+                    self.__flow_map[(u, v)] += d
                     G[u][v]["load"] += d
 
                 paths[idx] = best_path

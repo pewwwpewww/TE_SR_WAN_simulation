@@ -173,7 +173,6 @@ class LeastLoadedLinkFirst(GenericSR):
             "waypoints": self.__segments,
             "weights": self.__weights,
             "loads": utilization,
-            "avg_util": avg_util
         }
 
         return solution

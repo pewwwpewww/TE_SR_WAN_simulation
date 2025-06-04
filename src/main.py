@@ -303,11 +303,11 @@ def main():
     """ For each figure used in the paper we perform a single test-run comprising each multiple test instances """
     # Evaluation Fig. 3
     print(f"Start {HIGHLIGHT}MCF Synthetic Demands - All Topologies{CEND}:")
-    all_topologies_synthetic_demands()
+    #all_topologies_synthetic_demands()
 
     # Evaluation Fig. 4
     print(f"Start {HIGHLIGHT}MCF Synthetic Demands - All Algorithms - Abilene{CEND}:")
-    abilene_all_algorithms()
+    #abilene_all_algorithms()
 
     # Evaluation Fig. 5
     print(f"Start {HIGHLIGHT}Scaled Real Demands - Abilene, Geant, Germany50{CEND}:")
